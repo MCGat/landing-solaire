@@ -196,11 +196,78 @@
       padding: 80px 0;
     }
 
+    .hero-section {
+      position: relative;
+      background: linear-gradient(135deg, rgba(0, 91, 255, 0.08), rgba(247, 147, 30, 0.06));
+      overflow: hidden;
+    }
+
+    .hero-section::before,
+    .hero-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-section::before {
+      background-image: radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.5), transparent 50%), radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.35), transparent 45%);
+      opacity: 0.8;
+    }
+
+    .hero-section::after {
+      background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0px, rgba(255, 255, 255, 0.08) 24px, transparent 24px, transparent 48px);
+      mix-blend-mode: soft-light;
+    }
+
     .hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
       align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid rgba(31, 41, 55, 0.12);
+      background-color: #fff;
+      color: var(--text-primary);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    .badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    .badge.green {
+      color: var(--accent-green);
+    }
+
+    .badge.blue {
+      color: var(--accent-blue);
+    }
+
+    .badge.orange {
+      color: var(--accent-orange);
     }
 
     .section-divider {
@@ -368,6 +435,24 @@
       background-color: var(--bg-muted);
     }
 
+    .how-it-works {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-it-works::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 0% 0%, rgba(0, 91, 255, 0.08), transparent 55%), radial-gradient(circle at 100% 100%, rgba(22, 163, 74, 0.08), transparent 50%);
+      opacity: 0.7;
+    }
+
+    .how-it-works > .container {
+      position: relative;
+      z-index: 1;
+    }
+
     .steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -417,6 +502,25 @@
       margin-bottom: 12px;
     }
 
+    .trust {
+      background: linear-gradient(180deg, #fff, #f8f9fb);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trust::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(90deg, rgba(0, 91, 255, 0.06) 0, rgba(0, 91, 255, 0.06) 2px, transparent 2px, transparent 16px);
+      opacity: 0.5;
+    }
+
+    .trust > .container {
+      position: relative;
+      z-index: 1;
+    }
+
     .confidence-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -427,6 +531,22 @@
     .confidence-list {
       display: grid;
       gap: 16px;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0 12px;
+    }
+
+    .ribbon {
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0, 91, 255, 0.1), rgba(22, 163, 74, 0.1));
+      font-weight: 600;
+      color: var(--text-primary);
+      border: 1px solid rgba(0, 0, 0, 0.04);
     }
 
     .confidence-item {
@@ -524,26 +644,43 @@
     }
 
     .benefit-card {
-      background-color: var(--bg-section);
+      background: linear-gradient(145deg, #ffffff, rgba(0, 91, 255, 0.05));
       border-radius: 18px;
       padding: 22px;
       border: 1px solid var(--border);
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
     }
 
-    .benefit-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      margin-bottom: 14px;
+    .benefit-card .tag {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      background: linear-gradient(120deg, rgba(247, 147, 30, 0.15), rgba(0, 91, 255, 0.12));
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--accent-blue);
+      background-color: rgba(0, 91, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
     }
 
-    .benefit-icon svg {
-      stroke: var(--accent-orange);
+    .faq-section {
+      background: linear-gradient(135deg, rgba(247, 147, 30, 0.05), rgba(0, 91, 255, 0.05));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faq-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 80%, rgba(22, 163, 74, 0.08), transparent 45%);
+    }
+
+    .faq-section > .container {
+      position: relative;
+      z-index: 1;
     }
 
     .faq-cta {
@@ -576,6 +713,19 @@
       padding: 28px;
       border: 1px solid var(--border);
       box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .cta-panel .label-ribbon {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(247, 147, 30, 0.12), rgba(0, 91, 255, 0.12));
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
     }
 
     .cta-panel form {
@@ -693,17 +843,29 @@
       margin: 6px 0;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .animate-in,
-      .hover-lift,
-      .savings-fill,
-      .btn,
-      a {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        transform: none !important;
-        box-shadow: none !important;
+    @media (max-width: 1023px) {
+      main section {
+        padding: 64px 0;
+      }
+
+      .hero,
+      .confidence-grid,
+      .faq-cta {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      main section {
+        padding: 56px 0;
+      }
+
+      .hero {
+        gap: 28px;
+      }
+
+      .hero-badges {
+        flex-direction: column;
       }
     }
 
@@ -749,21 +911,27 @@
   </header>
 
   <main>
-    <section class="container hero">
+    <section class="hero-section">
+      <div class="container hero">
       <div>
         <p class="hero-subtext" style="color: var(--accent-orange); font-weight: 600;">Pompe à chaleur hybride financée par vos économies</p>
         <h1>Remplacez votre chaudière gaz sans débourser 1 €* et réalisez jusqu'à 70 % d'économie</h1>
         <p class="hero-subtext">Nous combinons les aides de l'État, les primes énergie et l'optimisation de votre budget gaz pour financer une pompe à chaleur hybride. Vous investissez dans votre maison plutôt que de subir une facture qui grimpe chaque hiver.</p>
 
-          <div class="metric-cards">
-            <div class="metric hover-lift animate-in">
-              <strong>Jusqu'à -70 % sur votre facture</strong>
-              <small>Selon le profil énergétique et l'équipement installé.</small>
-            </div>
-            <div class="metric hover-lift animate-in delay-1">
-              <strong>Offre 100 % autofinancée</strong>
-              <small>Mensualité équivalente à l'ancienne facture pour de nombreux foyers.</small>
-            </div>
+        <div class="hero-badges">
+          <span class="badge green">Aides cumulées jusqu'à 12 000 €</span>
+          <span class="badge blue">Conseiller unique dédié</span>
+          <span class="badge orange">Économies garanties par contrat</span>
+        </div>
+
+        <div class="metric-cards">
+          <div class="metric">
+            <strong>Jusqu'à -70 % sur votre facture</strong>
+            <small>Selon le profil énergétique et l'équipement installé.</small>
+          </div>
+          <div class="metric">
+            <strong>Offre 100 % autofinancée</strong>
+            <small>Mensualité équivalente à l'ancienne facture pour de nombreux foyers.</small>
           </div>
 
           <div class="cta-group">
@@ -796,22 +964,10 @@
           </div>
         <p class="disclaimer">*Exemple indicatif basé sur un foyer réel accompagné par nos conseillers. Les économies et aides varient selon votre situation.</p>
       </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <h2>Ils nous font confiance</h2>
-        <p>Institutions publiques et partenaires énergie s'appuient sur Hybride Home pour accélérer la rénovation des foyers gaz.</p>
-        <div class="trust-logos" aria-label="Partenaires et labels de confiance">
-          <span>🇫🇷 Ministère de la Transition énergétique</span>
-          <span>✅ MaPrimeRénov'</span>
-          <span>♻️ Certificats d'Économies d'Énergie</span>
-          <span>🏅 Installateurs RGE Audités</span>
-        </div>
       </div>
     </section>
 
-    <section class="section-muted">
+    <section class="section-muted how-it-works">
       <div class="container">
         <h2>Comment ça marche ?</h2>
         <p>Nous réorganisons votre budget énergie en intégrant toutes les aides disponibles et en pilotant votre projet de A à Z. Résultat : vous remplacez votre chaudière par une solution hybride performante, sans complexité administrative.</p>
@@ -835,15 +991,18 @@
       </div>
     </section>
 
-    <div class="section-divider" aria-hidden="true"></div>
-
-    <section>
+    <section class="trust">
       <div class="container confidence-grid">
         <div>
           <h2>Confiance & preuves</h2>
           <p>Nous travaillons avec les dispositifs officiels pour sécuriser votre investissement et garantir un accompagnement sérieux.</p>
-            <div class="confidence-list">
-            <div class="confidence-item hover-lift animate-in">
+          <div class="trust-badges">
+            <span class="ribbon">100 % des aides mobilisées</span>
+            <span class="ribbon">Audit énergétique offert</span>
+            <span class="ribbon">Suivi annuel inclus</span>
+          </div>
+          <div class="confidence-list">
+            <div class="confidence-item">
               <strong>Aides de l'État et dispositifs officiels</strong>
               <span>MaPrimeRénov', CEE, bonus locaux.</span>
             </div>
@@ -895,15 +1054,18 @@
       <div class="container">
         <h2>Les bénéfices pour votre maison</h2>
         <div class="benefits-grid">
-          <article class="benefit-card hover-lift animate-in">
+          <article class="benefit-card">
+            <span class="tag">Confort</span>
             <h3>Confort optimisé</h3>
             <p>Le système hybride choisit automatiquement le mode le plus avantageux (gaz ou énergie renouvelable) pour maintenir une température stable.</p>
           </article>
-          <article class="benefit-card hover-lift animate-in delay-1">
+          <article class="benefit-card">
+            <span class="tag">Écologie</span>
             <h3>Empreinte carbone réduite</h3>
             <p>Moins de gaz consommé, c'est moins d'émissions de CO₂ et un meilleur classement énergétique pour votre bien.</p>
           </article>
-          <article class="benefit-card hover-lift animate-in delay-2">
+          <article class="benefit-card">
+            <span class="tag">Valorisation</span>
             <h3>Maison valorisée</h3>
             <p>Un chauffage performant rassure les acheteurs et améliore la valeur de votre maison individuelle.</p>
           </article>
@@ -911,9 +1073,7 @@
       </div>
     </section>
 
-    <div class="section-divider" aria-hidden="true"></div>
-
-    <section>
+    <section class="faq-section">
       <div class="container faq-cta">
         <div>
           <h2>Questions fréquentes</h2>
@@ -934,7 +1094,8 @@
             <p>Votre maison gagne en valeur grâce à un chauffage récent et économe. Les futurs acheteurs profiteront d'une facture maîtrisée et d'un meilleur DPE.</p>
           </details>
         </div>
-        <div class="cta-panel hover-lift animate-in scale-in">
+        <div class="cta-panel">
+          <div class="label-ribbon">Accompagnement complet</div>
           <h3>Prêt à voir combien votre chaudière gaz vous coûte vraiment ?</h3>
           <p>Recevez une estimation personnalisée sans engagement. Un conseiller énergie vous rappelle sous 24h.</p>
           <form>
