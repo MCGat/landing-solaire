@@ -37,6 +37,80 @@
     a {
       text-decoration: none;
       color: inherit;
+      transition: color 0.35s ease, opacity 0.35s ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--accent-blue);
+    }
+
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scale-in {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes savings-width {
+      from {
+        width: 0;
+      }
+      to {
+        width: var(--savings-target, 62%);
+      }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation-name: fade-in-up;
+      animation-duration: 0.6s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+      animation-delay: var(--animation-delay, 0s);
+    }
+
+    .animate-in.scale-in {
+      animation-name: scale-in;
+      animation-duration: 0.5s;
+    }
+
+    .hover-lift {
+      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      will-change: transform;
+    }
+
+    .hover-lift:hover,
+    .hover-lift:focus-within {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.15);
+    }
+
+    .delay-1 {
+      --animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      --animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      --animation-delay: 0.3s;
     }
 
     header {
@@ -81,7 +155,7 @@
       font-size: 1rem;
       cursor: pointer;
       border: none;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .btn-primary {
@@ -91,6 +165,14 @@
 
     .btn-primary:hover {
       background-color: #0047c7;
+      box-shadow: 0 10px 20px rgba(0, 91, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:focus-visible {
+      outline: 3px solid rgba(0, 91, 255, 0.3);
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px rgba(0, 91, 255, 0.15);
     }
 
     .btn-secondary {
@@ -102,6 +184,12 @@
     .btn-secondary:hover {
       border-color: var(--text-secondary);
       color: var(--text-secondary);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary:focus-visible {
+      outline: 3px solid rgba(75, 85, 99, 0.35);
+      outline-offset: 3px;
     }
 
     main section {
@@ -180,6 +268,24 @@
 
     .badge.orange {
       color: var(--accent-orange);
+    }
+
+    .section-divider {
+      height: 12px;
+      width: min(960px, 90%);
+      margin: -20px auto 60px;
+      border-radius: 999px;
+      background-image: linear-gradient(90deg, rgba(0, 91, 255, 0.2), rgba(22, 163, 74, 0.2), rgba(247, 147, 30, 0.25));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-divider::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 999px;
+      background-image: repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.25) 0, rgba(255, 255, 255, 0.25) 12px, transparent 12px, transparent 24px);
     }
 
     h1 {
@@ -299,18 +405,24 @@
       font-weight: 600;
     }
 
-    .progress-bar {
-      height: 8px;
-      background-color: var(--border);
+    .savings-bar {
+      position: relative;
+      height: 12px;
+      background-color: var(--bg-muted);
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(22, 163, 74, 0.25);
     }
 
-    .progress-fill {
-      width: 62%;
+    .savings-fill {
+      --savings-target: 62%;
+      width: 0;
       height: 100%;
+      border-radius: inherit;
       background: linear-gradient(90deg, var(--accent-green), #7dd3ae);
+      animation: savings-width 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation-delay: 0.2s;
     }
 
     .disclaimer {
@@ -354,6 +466,29 @@
       padding: 22px;
       border: 1px solid var(--border);
       box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(0, 91, 255, 0.15), rgba(22, 163, 74, 0.1));
+    }
+
+    .step-icon svg,
+    .benefit-icon svg,
+    .testimonial-avatar svg {
+      width: 28px;
+      height: 28px;
+      display: block;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .step-number {
@@ -433,20 +568,72 @@
       color: var(--text-secondary);
     }
 
+    .trust-testimonial {
+      background: linear-gradient(180deg, rgba(0, 91, 255, 0.05), rgba(22, 163, 74, 0.04));
+      border-radius: 24px;
+      border: 1px solid rgba(0, 91, 255, 0.15);
+      padding: 26px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .testimonial-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(0, 91, 255, 0.25));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .testimonial-avatar svg {
+      stroke: var(--accent-blue);
+    }
+
     blockquote {
       margin: 0;
-      padding: 22px;
-      background-color: var(--bg-section);
+      padding: 24px 32px;
+      background-color: rgba(255, 255, 255, 0.8);
       border-radius: 18px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0, 91, 255, 0.15);
       font-style: italic;
+      position: relative;
+      color: var(--text-primary);
+    }
+
+    blockquote::before,
+    blockquote::after {
+      content: '“';
+      position: absolute;
+      font-size: 3rem;
+      color: rgba(0, 91, 255, 0.15);
+      font-style: normal;
+    }
+
+    blockquote::before {
+      top: 10px;
+      left: 18px;
+    }
+
+    blockquote::after {
+      content: '”';
+      bottom: 8px;
+      right: 18px;
     }
 
     blockquote footer {
-      margin-top: 12px;
+      margin-top: 18px;
       font-style: normal;
       font-weight: 600;
-      color: var(--text-primary);
+      color: var(--accent-blue);
     }
 
     .benefits-grid {
@@ -551,15 +738,96 @@
       font-size: 0.95rem;
       color: var(--text-primary);
       font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
     }
 
-    input, select {
+    .input-field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--border);
       background-color: var(--bg-page);
+    }
+
+    .input-field svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--accent-blue);
+    }
+
+    .input-field input,
+    .input-field select {
+      border: none;
+      background: transparent;
       font-size: 1rem;
       font-family: inherit;
+      width: 100%;
+      outline: none;
+    }
+
+    .privacy-note {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: -6px;
+    }
+
+    .trust-logos {
+      background-color: var(--bg-section);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+    }
+
+    .trust-logos span {
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cta-band {
+      position: fixed;
+      right: 20px;
+      bottom: 24px;
+      background-color: var(--bg-section);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+      border-radius: 18px;
+      padding: 18px 22px;
+      width: min(360px, 90%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1000;
+    }
+
+    .cta-band strong {
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .cta-band p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .cta-band .btn {
+      width: 100%;
     }
 
     footer {
@@ -620,6 +888,14 @@
       .before-after {
         grid-template-columns: 1fr;
       }
+
+      .cta-band {
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border-radius: 0;
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -627,10 +903,10 @@
   <header>
     <div class="container header-inner">
       <div class="logo">Hybride Home</div>
-      <div class="header-actions">
-        <span>Dossier en moins de 2 min</span>
-        <button class="btn btn-secondary">Être rappelé</button>
-      </div>
+        <div class="header-actions">
+          <span>Dossier en moins de 2 min</span>
+          <button class="btn btn-secondary animate-in scale-in">Être rappelé</button>
+        </div>
     </div>
   </header>
 
@@ -657,36 +933,35 @@
             <strong>Offre 100 % autofinancée</strong>
             <small>Mensualité équivalente à l'ancienne facture pour de nombreux foyers.</small>
           </div>
-        </div>
 
-        <div class="cta-group">
-          <button class="btn btn-primary">Je simule mes économies</button>
-          <button class="btn btn-secondary">Parler à un expert</button>
-        </div>
+          <div class="cta-group">
+            <button class="btn btn-primary animate-in scale-in">Je simule mes économies</button>
+            <button class="btn btn-secondary animate-in scale-in delay-1">Parler à un expert</button>
+          </div>
         <p class="reassurance">Technicien dédié • Installation certifiée RGE • Suivi de performance inclus</p>
       </div>
 
-      <div class="simulation-card">
-        <header>
-          <h3>Famille Duprez – Orchies</h3>
-          <p>Maison individuelle 110 m² – Chauffage au gaz</p>
-        </header>
-        <div class="before-after">
-          <article>
-            <h4>Avant – Ancienne chaudière gaz</h4>
-            <p class="amount before">1 870 € / an</p>
-            <p>Facture qui explose chaque hiver.</p>
-          </article>
-          <article>
-            <h4>Après – Pompe à chaleur hybride</h4>
-            <p class="amount">695 € / an</p>
-            <p>Facture optimisée et maîtrisée.</p>
-          </article>
-        </div>
-        <div class="gain-block">Gain annuel estimé : 1 170 € / an (soit plus de 62 % d'économie)*</div>
-        <div class="progress-bar" aria-hidden="true">
-          <div class="progress-fill"></div>
-        </div>
+        <div class="simulation-card hover-lift animate-in scale-in delay-1">
+          <header>
+            <h3>Famille Duprez – Orchies</h3>
+            <p>Maison individuelle 110 m² – Chauffage au gaz</p>
+          </header>
+          <div class="before-after">
+            <article class="hover-lift animate-in scale-in">
+              <h4>Avant – Ancienne chaudière gaz</h4>
+              <p class="amount before">1 870 € / an</p>
+              <p>Facture qui explose chaque hiver.</p>
+            </article>
+            <article class="hover-lift animate-in scale-in delay-1">
+              <h4>Après – Pompe à chaleur hybride</h4>
+              <p class="amount">695 € / an</p>
+              <p>Facture optimisée et maîtrisée.</p>
+            </article>
+          </div>
+          <div class="gain-block">Gain annuel estimé : 1 170 € / an (soit plus de 62 % d'économie)*</div>
+          <div class="savings-bar animate-in" aria-hidden="true">
+            <div class="savings-fill"></div>
+          </div>
         <p class="disclaimer">*Exemple indicatif basé sur un foyer réel accompagné par nos conseillers. Les économies et aides varient selon votre situation.</p>
       </div>
       </div>
@@ -696,23 +971,23 @@
       <div class="container">
         <h2>Comment ça marche ?</h2>
         <p>Nous réorganisons votre budget énergie en intégrant toutes les aides disponibles et en pilotant votre projet de A à Z. Résultat : vous remplacez votre chaudière par une solution hybride performante, sans complexité administrative.</p>
-        <div class="steps">
-          <article class="step-card">
-            <span class="step-number">Étape 1</span>
-            <h3>Diagnostic & simulation</h3>
-            <p>Simulation en ligne de votre facture actuelle et des économies potentielles. Un technicien se déplace si le projet est éligible.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">Étape 2</span>
-            <h3>Dossier d'aides & financement</h3>
-            <p>Montage complet du dossier : MaPrimeRénov', CEE, primes GRDF… Objectif : un reste à charge proche de votre ancienne mensualité.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">Étape 3</span>
-            <h3>Installation & suivi</h3>
-            <p>Pose certifiée RGE, mise en service et suivi de performance pour garantir vos économies dans la durée.</p>
-          </article>
-        </div>
+          <div class="steps">
+            <article class="step-card hover-lift animate-in">
+              <span class="step-number">Étape 1</span>
+              <h3>Diagnostic & simulation</h3>
+              <p>Simulation en ligne de votre facture actuelle et des économies potentielles. Un technicien se déplace si le projet est éligible.</p>
+            </article>
+            <article class="step-card hover-lift animate-in delay-1">
+              <span class="step-number">Étape 2</span>
+              <h3>Dossier d'aides & financement</h3>
+              <p>Montage complet du dossier : MaPrimeRénov', CEE, primes GRDF… Objectif : un reste à charge proche de votre ancienne mensualité.</p>
+            </article>
+            <article class="step-card hover-lift animate-in delay-2">
+              <span class="step-number">Étape 3</span>
+              <h3>Installation & suivi</h3>
+              <p>Pose certifiée RGE, mise en service et suivi de performance pour garantir vos économies dans la durée.</p>
+            </article>
+          </div>
       </div>
     </section>
 
@@ -731,11 +1006,11 @@
               <strong>Aides de l'État et dispositifs officiels</strong>
               <span>MaPrimeRénov', CEE, bonus locaux.</span>
             </div>
-            <div class="confidence-item">
+            <div class="confidence-item hover-lift animate-in delay-1">
               <strong>Installateurs certifiés RGE</strong>
               <span>Chaque pose est réalisée par un partenaire audité.</span>
             </div>
-            <div class="confidence-item">
+            <div class="confidence-item hover-lift animate-in delay-2">
               <strong>Partenariat avec le monde du gaz</strong>
               <span>Accompagnement cohérent avec les obligations GRDF.</span>
             </div>
@@ -749,15 +1024,31 @@
         <div>
           <article>
             <h3>Ils sont passés à l'hybride</h3>
-            <blockquote>
-              « Nous n'aurions jamais imaginé pouvoir changer de chauffage sans puiser dans nos économies. L'équipe Hybride Home nous a guidés pas à pas et suit encore les performances de la pompe à chaleur. »
-              <footer>Famille Duprez – Gain estimé : 1 170 € / an*</footer>
-            </blockquote>
+            <div class="trust-testimonial">
+              <div class="testimonial-header">
+                <div class="testimonial-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" role="presentation">
+                    <circle cx="16" cy="12" r="6"></circle>
+                    <path d="M6 27c2.5-4 6.5-6 10-6s7.5 2 10 6" stroke="var(--accent-blue)"></path>
+                  </svg>
+                </div>
+                <div>
+                  <strong>Famille Duprez</strong>
+                  <p style="margin: 4px 0 0; color: var(--text-secondary);">Orchies • Maison individuelle</p>
+                </div>
+              </div>
+              <blockquote>
+                Nous n'aurions jamais imaginé pouvoir changer de chauffage sans puiser dans nos économies. L'équipe Hybride Home nous a guidés pas à pas et suit encore les performances de la pompe à chaleur.
+                <footer>Gain estimé : 1 170 € / an*</footer>
+              </blockquote>
+            </div>
             <p class="disclaimer">*Les montants et économies cités sont des estimations basées sur les consommations historiques du foyer.</p>
           </article>
         </div>
       </div>
     </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
 
     <section class="section-muted">
       <div class="container">
@@ -809,24 +1100,51 @@
           <p>Recevez une estimation personnalisée sans engagement. Un conseiller énergie vous rappelle sous 24h.</p>
           <form>
             <div>
-              <label for="bill">Montant annuel estimé de votre facture de gaz</label>
-              <input type="text" id="bill" name="bill" placeholder="Ex : 1 900 €">
+              <label for="bill">Montant annuel estimé de votre facture de gaz (€)</label>
+              <div class="input-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M12 1v22" />
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                <input type="text" id="bill" name="bill" placeholder="Ex : 1 900">
+              </div>
             </div>
             <div>
-              <label for="housing">Type de logement</label>
-              <select id="housing" name="housing">
-                <option value="">Sélectionnez</option>
-                <option value="maison">Maison individuelle</option>
-                <option value="appartement">Appartement</option>
-              </select>
+              <label for="housing">Type de logement principal</label>
+              <div class="input-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 11l9-8 9 8" />
+                  <path d="M5 10v10h4v-6h6v6h4V10" />
+                </svg>
+                <select id="housing" name="housing">
+                  <option value="">Sélectionnez</option>
+                  <option value="maison">Maison individuelle</option>
+                  <option value="appartement">Appartement</option>
+                </select>
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary">Lancer ma simulation</button>
+            <div>
+              <label for="contact">Téléphone pour être rappelé</label>
+              <div class="input-field">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.44 12.44 0 0 0 .7 2.73 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.34-1.34a2 2 0 0 1 2.11-.45 12.44 12.44 0 0 0 2.73.7 2 2 0 0 1 1.73 2.1z" />
+                </svg>
+                <input type="tel" id="contact" name="contact" placeholder="06 12 34 56 78">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary animate-in scale-in delay-1">Lancer ma simulation</button>
             <p class="reassurance">Aucune carte bancaire, réponse personnalisée par un technicien.</p>
           </form>
         </div>
       </div>
     </section>
   </main>
+
+  <div class="cta-band" role="complementary" aria-label="Accès rapide à la simulation">
+    <strong>Je simule mes économies en 2 minutes</strong>
+    <p>Technicien dédié • Dossier d'aides complet • Installation certifiée RGE</p>
+    <button class="btn btn-primary">Je simule mes économies</button>
+  </div>
 
   <footer>
     <div class="container">
