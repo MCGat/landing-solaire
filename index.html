@@ -37,6 +37,80 @@
     a {
       text-decoration: none;
       color: inherit;
+      transition: color 0.35s ease, opacity 0.35s ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--accent-blue);
+    }
+
+    @keyframes fade-in-up {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scale-in {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes savings-width {
+      from {
+        width: 0;
+      }
+      to {
+        width: var(--savings-target, 62%);
+      }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation-name: fade-in-up;
+      animation-duration: 0.6s;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+      animation-delay: var(--animation-delay, 0s);
+    }
+
+    .animate-in.scale-in {
+      animation-name: scale-in;
+      animation-duration: 0.5s;
+    }
+
+    .hover-lift {
+      transition: transform 0.45s ease, box-shadow 0.45s ease;
+      will-change: transform;
+    }
+
+    .hover-lift:hover,
+    .hover-lift:focus-within {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.15);
+    }
+
+    .delay-1 {
+      --animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      --animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      --animation-delay: 0.3s;
     }
 
     header {
@@ -81,7 +155,7 @@
       font-size: 1rem;
       cursor: pointer;
       border: none;
-      transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      transition: background-color 0.35s ease, color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .btn-primary {
@@ -91,6 +165,8 @@
 
     .btn-primary:hover {
       background-color: #0047c7;
+      box-shadow: 0 10px 20px rgba(0, 91, 255, 0.25);
+      transform: translateY(-2px);
     }
 
     .btn-primary:focus-visible {
@@ -108,6 +184,7 @@
     .btn-secondary:hover {
       border-color: var(--text-secondary);
       color: var(--text-secondary);
+      transform: translateY(-2px);
     }
 
     .btn-secondary:focus-visible {
@@ -261,18 +338,24 @@
       font-weight: 600;
     }
 
-    .progress-bar {
-      height: 8px;
-      background-color: var(--border);
+    .savings-bar {
+      position: relative;
+      height: 12px;
+      background-color: var(--bg-muted);
       border-radius: 999px;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(22, 163, 74, 0.25);
     }
 
-    .progress-fill {
-      width: 62%;
+    .savings-fill {
+      --savings-target: 62%;
+      width: 0;
       height: 100%;
+      border-radius: inherit;
       background: linear-gradient(90deg, var(--accent-green), #7dd3ae);
+      animation: savings-width 2.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation-delay: 0.2s;
     }
 
     .disclaimer {
@@ -610,6 +693,20 @@
       margin: 6px 0;
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .animate-in,
+      .hover-lift,
+      .savings-fill,
+      .btn,
+      a {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
     @media (max-width: 640px) {
       .header-inner {
         flex-direction: column;
@@ -644,10 +741,10 @@
   <header>
     <div class="container header-inner">
       <div class="logo">Hybride Home</div>
-      <div class="header-actions">
-        <span>Dossier en moins de 2 min</span>
-        <button class="btn btn-secondary">Être rappelé</button>
-      </div>
+        <div class="header-actions">
+          <span>Dossier en moins de 2 min</span>
+          <button class="btn btn-secondary animate-in scale-in">Être rappelé</button>
+        </div>
     </div>
   </header>
 
@@ -658,45 +755,45 @@
         <h1>Remplacez votre chaudière gaz sans débourser 1 €* et réalisez jusqu'à 70 % d'économie</h1>
         <p class="hero-subtext">Nous combinons les aides de l'État, les primes énergie et l'optimisation de votre budget gaz pour financer une pompe à chaleur hybride. Vous investissez dans votre maison plutôt que de subir une facture qui grimpe chaque hiver.</p>
 
-        <div class="metric-cards">
-          <div class="metric">
-            <strong>Jusqu'à -70 % sur votre facture</strong>
-            <small>Selon le profil énergétique et l'équipement installé.</small>
+          <div class="metric-cards">
+            <div class="metric hover-lift animate-in">
+              <strong>Jusqu'à -70 % sur votre facture</strong>
+              <small>Selon le profil énergétique et l'équipement installé.</small>
+            </div>
+            <div class="metric hover-lift animate-in delay-1">
+              <strong>Offre 100 % autofinancée</strong>
+              <small>Mensualité équivalente à l'ancienne facture pour de nombreux foyers.</small>
+            </div>
           </div>
-          <div class="metric">
-            <strong>Offre 100 % autofinancée</strong>
-            <small>Mensualité équivalente à l'ancienne facture pour de nombreux foyers.</small>
-          </div>
-        </div>
 
-        <div class="cta-group">
-          <button class="btn btn-primary">Je simule mes économies</button>
-          <button class="btn btn-secondary">Parler à un expert</button>
-        </div>
+          <div class="cta-group">
+            <button class="btn btn-primary animate-in scale-in">Je simule mes économies</button>
+            <button class="btn btn-secondary animate-in scale-in delay-1">Parler à un expert</button>
+          </div>
         <p class="reassurance">Technicien dédié • Installation certifiée RGE • Suivi de performance inclus</p>
       </div>
 
-      <div class="simulation-card">
-        <header>
-          <h3>Famille Duprez – Orchies</h3>
-          <p>Maison individuelle 110 m² – Chauffage au gaz</p>
-        </header>
-        <div class="before-after">
-          <article>
-            <h4>Avant – Ancienne chaudière gaz</h4>
-            <p class="amount before">1 870 € / an</p>
-            <p>Facture qui explose chaque hiver.</p>
-          </article>
-          <article>
-            <h4>Après – Pompe à chaleur hybride</h4>
-            <p class="amount">695 € / an</p>
-            <p>Facture optimisée et maîtrisée.</p>
-          </article>
-        </div>
-        <div class="gain-block">Gain annuel estimé : 1 170 € / an (soit plus de 62 % d'économie)*</div>
-        <div class="progress-bar" aria-hidden="true">
-          <div class="progress-fill"></div>
-        </div>
+        <div class="simulation-card hover-lift animate-in scale-in delay-1">
+          <header>
+            <h3>Famille Duprez – Orchies</h3>
+            <p>Maison individuelle 110 m² – Chauffage au gaz</p>
+          </header>
+          <div class="before-after">
+            <article class="hover-lift animate-in scale-in">
+              <h4>Avant – Ancienne chaudière gaz</h4>
+              <p class="amount before">1 870 € / an</p>
+              <p>Facture qui explose chaque hiver.</p>
+            </article>
+            <article class="hover-lift animate-in scale-in delay-1">
+              <h4>Après – Pompe à chaleur hybride</h4>
+              <p class="amount">695 € / an</p>
+              <p>Facture optimisée et maîtrisée.</p>
+            </article>
+          </div>
+          <div class="gain-block">Gain annuel estimé : 1 170 € / an (soit plus de 62 % d'économie)*</div>
+          <div class="savings-bar animate-in" aria-hidden="true">
+            <div class="savings-fill"></div>
+          </div>
         <p class="disclaimer">*Exemple indicatif basé sur un foyer réel accompagné par nos conseillers. Les économies et aides varient selon votre situation.</p>
       </div>
     </section>
@@ -718,46 +815,23 @@
       <div class="container">
         <h2>Comment ça marche ?</h2>
         <p>Nous réorganisons votre budget énergie en intégrant toutes les aides disponibles et en pilotant votre projet de A à Z. Résultat : vous remplacez votre chaudière par une solution hybride performante, sans complexité administrative.</p>
-        <div class="steps">
-          <article class="step-card">
-            <span class="step-number">Étape 1</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <circle cx="14" cy="14" r="7" stroke="var(--accent-blue)"></circle>
-                <line x1="20" y1="20" x2="26" y2="26" stroke="var(--accent-blue)"></line>
-                <line x1="14" y1="10" x2="14" y2="14" stroke="var(--accent-blue)"></line>
-                <line x1="14" y1="14" x2="17" y2="17" stroke="var(--accent-blue)"></line>
-              </svg>
-            </div>
-            <h3>Diagnostic & simulation</h3>
-            <p>Simulation en ligne de votre facture actuelle et des économies potentielles. Un technicien se déplace si le projet est éligible.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">Étape 2</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <rect x="7" y="5" width="14" height="22" rx="3" stroke="var(--accent-blue)"></rect>
-                <line x1="11" y1="11" x2="17" y2="11" stroke="var(--accent-blue)"></line>
-                <line x1="11" y1="16" x2="17" y2="16" stroke="var(--accent-blue)"></line>
-                <path d="M20 19l3 3 5-7" stroke="var(--accent-green)"></path>
-              </svg>
-            </div>
-            <h3>Dossier d'aides & financement</h3>
-            <p>Montage complet du dossier : MaPrimeRénov', CEE, primes GRDF… Objectif : un reste à charge proche de votre ancienne mensualité.</p>
-          </article>
-          <article class="step-card">
-            <span class="step-number">Étape 3</span>
-            <div class="step-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <path d="M10 8l12 12" stroke="var(--accent-blue)"></path>
-                <path d="M22 10a4 4 0 10-5.66-5.66L16 4l4 4z" stroke="var(--accent-orange)"></path>
-                <path d="M10 24a4 4 0 11-5.66-5.66L6 20l4 4z" stroke="var(--accent-green)"></path>
-              </svg>
-            </div>
-            <h3>Installation & suivi</h3>
-            <p>Pose certifiée RGE, mise en service et suivi de performance pour garantir vos économies dans la durée.</p>
-          </article>
-        </div>
+          <div class="steps">
+            <article class="step-card hover-lift animate-in">
+              <span class="step-number">Étape 1</span>
+              <h3>Diagnostic & simulation</h3>
+              <p>Simulation en ligne de votre facture actuelle et des économies potentielles. Un technicien se déplace si le projet est éligible.</p>
+            </article>
+            <article class="step-card hover-lift animate-in delay-1">
+              <span class="step-number">Étape 2</span>
+              <h3>Dossier d'aides & financement</h3>
+              <p>Montage complet du dossier : MaPrimeRénov', CEE, primes GRDF… Objectif : un reste à charge proche de votre ancienne mensualité.</p>
+            </article>
+            <article class="step-card hover-lift animate-in delay-2">
+              <span class="step-number">Étape 3</span>
+              <h3>Installation & suivi</h3>
+              <p>Pose certifiée RGE, mise en service et suivi de performance pour garantir vos économies dans la durée.</p>
+            </article>
+          </div>
       </div>
     </section>
 
@@ -768,16 +842,16 @@
         <div>
           <h2>Confiance & preuves</h2>
           <p>Nous travaillons avec les dispositifs officiels pour sécuriser votre investissement et garantir un accompagnement sérieux.</p>
-          <div class="confidence-list">
-            <div class="confidence-item">
+            <div class="confidence-list">
+            <div class="confidence-item hover-lift animate-in">
               <strong>Aides de l'État et dispositifs officiels</strong>
               <span>MaPrimeRénov', CEE, bonus locaux.</span>
             </div>
-            <div class="confidence-item">
+            <div class="confidence-item hover-lift animate-in delay-1">
               <strong>Installateurs certifiés RGE</strong>
               <span>Chaque pose est réalisée par un partenaire audité.</span>
             </div>
-            <div class="confidence-item">
+            <div class="confidence-item hover-lift animate-in delay-2">
               <strong>Partenariat avec le monde du gaz</strong>
               <span>Accompagnement cohérent avec les obligations GRDF.</span>
             </div>
@@ -821,36 +895,15 @@
       <div class="container">
         <h2>Les bénéfices pour votre maison</h2>
         <div class="benefits-grid">
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <rect x="6" y="10" width="20" height="12" rx="4"></rect>
-                <line x1="10" y1="16" x2="22" y2="16"></line>
-                <path d="M12 8l2-4h4l2 4"></path>
-              </svg>
-            </div>
+          <article class="benefit-card hover-lift animate-in">
             <h3>Confort optimisé</h3>
             <p>Le système hybride choisit automatiquement le mode le plus avantageux (gaz ou énergie renouvelable) pour maintenir une température stable.</p>
           </article>
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <circle cx="12" cy="20" r="4"></circle>
-                <circle cx="20" cy="12" r="4"></circle>
-                <path d="M8 8c2-2 6-2 8 0s6 2 8 0"></path>
-              </svg>
-            </div>
+          <article class="benefit-card hover-lift animate-in delay-1">
             <h3>Empreinte carbone réduite</h3>
             <p>Moins de gaz consommé, c'est moins d'émissions de CO₂ et un meilleur classement énergétique pour votre bien.</p>
           </article>
-          <article class="benefit-card">
-            <div class="benefit-icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" role="presentation">
-                <path d="M8 22l8-12 8 12z"></path>
-                <path d="M10 22v4h12v-4"></path>
-                <line x1="16" y1="6" x2="16" y2="4"></line>
-              </svg>
-            </div>
+          <article class="benefit-card hover-lift animate-in delay-2">
             <h3>Maison valorisée</h3>
             <p>Un chauffage performant rassure les acheteurs et améliore la valeur de votre maison individuelle.</p>
           </article>
@@ -881,7 +934,7 @@
             <p>Votre maison gagne en valeur grâce à un chauffage récent et économe. Les futurs acheteurs profiteront d'une facture maîtrisée et d'un meilleur DPE.</p>
           </details>
         </div>
-        <div class="cta-panel">
+        <div class="cta-panel hover-lift animate-in scale-in">
           <h3>Prêt à voir combien votre chaudière gaz vous coûte vraiment ?</h3>
           <p>Recevez une estimation personnalisée sans engagement. Un conseiller énergie vous rappelle sous 24h.</p>
           <form>
@@ -918,8 +971,7 @@
                 <input type="tel" id="contact" name="contact" placeholder="06 12 34 56 78">
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Lancer ma simulation</button>
-            <p class="privacy-note">Vos données sont uniquement utilisées pour vous rappeler et ne sont jamais revendues.</p>
+            <button type="submit" class="btn btn-primary animate-in scale-in delay-1">Lancer ma simulation</button>
             <p class="reassurance">Aucune carte bancaire, réponse personnalisée par un technicien.</p>
           </form>
         </div>
